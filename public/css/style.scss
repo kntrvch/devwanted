@@ -1,0 +1,58 @@
+$background-color: #fff;
+$loader-color: #2C3E50;
+$loader-size: 30vh;
+
+body {
+  margin-top: 100px;
+}
+
+.loader {
+  color: #fff;
+  text-align: center;
+  font-family: Consolas, Menlo, Monaco, monospace;
+  font-weight: bold;
+  font-size: $loader-size;
+  color: $loader-color;
+  opacity: 0.8;
+
+  span {
+    display: inline-block;
+    animation: pulse 0.4s alternate infinite ease-in-out;
+
+    &:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+.loader-inline {
+  display: none;
+  color: #fff;
+  text-align: center;
+  font-family: Consolas, Menlo, Monaco, monospace;
+  font-weight: bold;
+  color: $loader-color;
+  opacity: 0.8;
+
+  span {
+    display: inline-block;
+    animation: pulse 0.4s alternate infinite ease-in-out;
+
+    &:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+.nano { height: 600px; }
+.nano .nano-pane { background: #fff; }
+.nano .nano-slider { background: #fff; }
+.nano>.nano-pane>.nano-slider { background: #2C3E50; }
+.nano .nano-content { padding-right: 15px; }
