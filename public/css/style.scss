@@ -56,3 +56,20 @@ body {
 .nano .nano-slider { background: #fff; }
 .nano>.nano-pane>.nano-slider { background: #2C3E50; }
 .nano .nano-content { padding-right: 15px; }
+
+.irs-single {
+  background: #2C3E50;
+}
+
+.irs-bar {
+  border-top: 1px solid #2C3E50;
+  border-bottom: 1px solid #2C3E50;
+  background: #2C3E50;
+  background: linear-gradient(to top,rgba(27, 49, 71,1) 0,rgba(66, 88, 110,1) 100%);
+}
+
+.irs-bar-edge {
+  border: 1px solid #2C3E50;
+  background: #2C3E50;
+  background: linear-gradient(to top,rgba(27, 49, 71,1) 0,rgba(66, 88, 110,1) 100%);
+}

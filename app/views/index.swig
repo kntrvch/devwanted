@@ -6,22 +6,24 @@
 <div class="col-md-12">
                 <form action="/nearme" method="POST" class="form-inline filter">
               <label for="latitude" class="sr-only">Latitude</label>
-                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="text" class="form-control mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
                             
            <label for="longitude" class="sr-only">Longitude</label>
-                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="text" class="form-control mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
                             
-           <label for="distance" class="sr-only">Distance</label>
+           <!--<label for="distance" class="sr-only">Distance</label>
                             <select name="distance" id="distance" class="form-control mb-2 mr-sm-2">
                                 <option value="" disabled selected>Distance</option>
                                 <option value="0.2">200 m</option>
                                 <option value="2">2 Km</option>
                                 <option value="3">3 km</option>
                                 <option value="9">9 km</option>
-                            </select>
-                            
+                            </select>-->
+                            <div class="col-md-3">
+                              <input type="text" name="distance" id="distance" value="">
+                            </div>
                         <div class="input-group">
-                          <button class="btn btn-primary mb-2" type="submit" name="action">Search</button>
+                          <button class="btn-lg btn-primary mb-2" type="submit" name="action">Search</button>
                           <div class="input-group-append ml-2 mb-2">
                             <div class="loader-inline">
                               <span>/</span><span>/</span>

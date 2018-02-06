@@ -48,4 +48,18 @@ body {
 .nano .nano-content {
   padding-right: 15px; }
 
+.irs-single {
+  background: #2C3E50; }
+
+.irs-bar {
+  border-top: 1px solid #2C3E50;
+  border-bottom: 1px solid #2C3E50;
+  background: #2C3E50;
+  background: linear-gradient(to top, #1b3147 0, #42586e 100%); }
+
+.irs-bar-edge {
+  border: 1px solid #2C3E50;
+  background: #2C3E50;
+  background: linear-gradient(to top, #1b3147 0, #42586e 100%); }
+
 /*# sourceMappingURL=style.css.map */
