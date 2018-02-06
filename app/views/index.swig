@@ -5,11 +5,16 @@
     <div class="row">
 <div class="col-md-12">
                 <form action="/nearme" method="POST" class="form-inline filter">
+
+                <label for="address" class="sr-only">Address</label>
+                            <input placeholder="City, street..." name="address" id="address" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
+                   
+
               <label for="latitude" class="sr-only">Latitude</label>
-                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="">
                             
            <label for="longitude" class="sr-only">Longitude</label>
-                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="">
                             
            <!--<label for="distance" class="sr-only">Distance</label>
                             <select name="distance" id="distance" class="form-control mb-2 mr-sm-2">
@@ -79,6 +84,29 @@
   </div>
   <script type="text/javascript">
     var userLatitude, userLongitude;
+    var latitudeInput = document.getElementById('latitude');
+    var longitudeInput = document.getElementById('longitude');
+
+  var geocoder = new google.maps.Geocoder();
+
+  document.getElementById('address').addEventListener('keyup', function() {
+    geocodeAddress(geocoder);
+  });
+
+
+function geocodeAddress(geocoder) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+      console.log(results[0]);
+      latitudeInput.value = results[0].geometry.location.lat();
+      longitudeInput.value = results[0].geometry.location.lng();
+      console.log(latitudeInput.value + " | " +longitudeInput.value);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
 
     function getCurrentPosition() {
         // Check boreswer/navigator support       
@@ -94,9 +122,7 @@
         }
         // Get user position and place a icon on map       
         function getUserPosition(position) {
-            // Check longitude and latitude       
-            var latitudeInput = document.getElementById('latitude');
-            var longitudeInput = document.getElementById('longitude');
+            // Check longitude and latitude    
             latitudeInput.value = userLatitude = position.coords.latitude;
             longitudeInput.value = userLongitude = position.coords.longitude;
         }
