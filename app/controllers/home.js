@@ -59,8 +59,8 @@ router.post('/nearme', function (req, res, next) {
           res.render('index', {
               title: 'Jobs',
               jobs: jobs,
-              lat: -23.54312,
-              long: -46.642748,
+              lat: coords[1],
+              long: coords[0],
               distance: maxDistance, 
               formattedAddress: req.body.address
           });

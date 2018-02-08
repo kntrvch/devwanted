@@ -11,10 +11,10 @@
                    
 
               <label for="latitude" class="sr-only">Latitude</label>
-                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="{{lat}}">
                             
            <label for="longitude" class="sr-only">Longitude</label>
-                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="">
+                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="{{long}}">
 
                             <div class="col-md-3">
                               <input type="text" name="distance" id="distance" value="">
@@ -228,10 +228,12 @@ function geocodeAddress(geocoder) {
         // Get user position and place a icon on map       
         function getUserPosition(position) {
             // Check longitude and latitude 
-            if(position.coords.latitude != undefined && position.coords.longitude != undefined) {
-              autoLat.innerHTML = latitudeInput.value = userLatitude = position.coords.latitude;
-              autoLong.innerHTML = longitudeInput.value = userLongitude = position.coords.longitude;
+            if(latitudeInput.value == undefined && longitudeInput.value == undefined) {
+              latitudeInput.value = position.coords.latitude;
+              longitudeInput.value = position.coords.longitude;
             }   
+            autoLat.innerHTML = userLatitude = position.coords.latitude;
+            autoLong.innerHTML = userLongitude = position.coords.longitude;
             
         }
         // Setup a error function         
