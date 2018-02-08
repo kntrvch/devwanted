@@ -7,7 +7,7 @@
                 <form action="/nearme" method="POST" class="form-inline filter">
 
                 <label for="address" class="sr-only">Address</label>
-                            <input placeholder="City, street..." name="address" id="address" type="text" class="form-control-lg mb-2 mr-sm-2" value="">
+                            <input placeholder="City, street..." name="address" id="address" type="text" class="form-control-lg mb-2 mr-sm-2" value="{{formattedAddress}}">
                    
 
               <label for="latitude" class="sr-only">Latitude</label>
@@ -83,13 +83,14 @@
     var longitudeInput = document.getElementById('longitude');
     var autoLat = document.getElementById('autoLat');
     var autoLong = document.getElementById('autoLong');
+    var addressInput = document.getElementById('address');
 
 function initAutocomplete() {
 
 
   
   autocomplete = new google.maps.places.Autocomplete(
-      (document.getElementById('address')),
+      (addressInput),
       {types: ['geocode']});
 
 
@@ -184,7 +185,8 @@ getCurrentPosition();
     var place = autocomplete.getPlace();
     console.log(place);
     latitudeInput.value = place.geometry.location.lat();
-      longitudeInput.value = place.geometry.location.lng();
+    longitudeInput.value = place.geometry.location.lng();
+    addressInput.value = place.formatted_address;
   }
 
 
@@ -216,9 +218,12 @@ function geocodeAddress(geocoder) {
         }
         // Get user position and place a icon on map       
         function getUserPosition(position) {
-            // Check longitude and latitude    
-            autoLat.innerHTML = latitudeInput.value = userLatitude = position.coords.latitude;
-            autoLong.innerHTML = longitudeInput.value = userLongitude = position.coords.longitude;
+            // Check longitude and latitude 
+            if(position.coords.latitude != undefined && position.coords.longitude != undefined) {
+              autoLat.innerHTML = latitudeInput.value = userLatitude = position.coords.latitude;
+              autoLong.innerHTML = longitudeInput.value = userLongitude = position.coords.longitude;
+            }   
+            
         }
         // Setup a error function         
         function trackError(error) {
@@ -242,8 +247,9 @@ function geocodeAddress(geocoder) {
     
     $(function(){
     $("#distance").ionRangeSlider({
-      min: 1,
+      min: 0.5,
       max: 100, 
+      step: 0.5,
       from: {{distance || 10}}, 
       postfix: " km"
     });

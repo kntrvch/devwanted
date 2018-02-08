@@ -61,7 +61,8 @@ router.post('/nearme', function (req, res, next) {
               jobs: jobs,
               lat: -23.54312,
               long: -46.642748,
-              distance: maxDistance
+              distance: maxDistance, 
+              formattedAddress: req.body.address
           });
       });
   });

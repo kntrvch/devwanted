@@ -33,7 +33,7 @@ var JobSchema = new Schema({
 function stripNumbers(a) {
   if(a != undefined) {
     // removes postal code
-    return a.replace(/[0-9]{2}-[0-9]{3}/, '');
+    return a.replace(/[0-9]+-[0-9]+/, '').replace(/, [0-9]+/, '');
   }
   return;
 }
