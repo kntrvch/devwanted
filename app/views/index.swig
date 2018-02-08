@@ -41,13 +41,13 @@
             <div class="nano-content">
               <div class="list-group">
                 {% for item in jobs %}
-                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-marker-index="{{loop.index}}">
+                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{item.title}}</h5>
                       <small class="text-muted">{{item.created}}</small>
                     </div>
                     <strong>{{item.company}}</strong>
-                    <p class="mb-1">{{item.description}}</p>
+                    <!--<p class="mb-1">{{item.description}}</p>-->
                       <small class="text-muted">{{item.address}}</small>
                   </a>
                 {% endfor %}
@@ -67,9 +67,9 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-            <div id="job-info" class="bs-component p-3">
-              <h2 id="job-title">Example body text</h2>
-              <div id="job-description">Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. 
+            <div id="current-job-info" class="bs-component p-3">
+              <h2 id="current-job-title">Example body text</h2>
+              <div id="current-job-description">Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. 
               Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</div>
     
             </div>
@@ -84,6 +84,8 @@
     var autoLat = document.getElementById('autoLat');
     var autoLong = document.getElementById('autoLong');
     var addressInput = document.getElementById('address');
+    var currentJobTitle = document.getElementById('current-job-title');
+    var currentJobDescription = document.getElementById('current-job-description');
 
 function initAutocomplete() {
 
@@ -113,6 +115,7 @@ function initAutocomplete() {
         var markers = [];
         var bounds = new google.maps.LatLngBounds();
         // Using the Swig loop to get all data from location variable
+
         {% for item in jobs %}
         // Setup a lat long object
         var latLng = new google.maps.LatLng({{ item.coordinates[1] }}, {{ item.coordinates[0] }});
@@ -160,6 +163,12 @@ function initAutocomplete() {
             e.preventDefault();
             // Use -1 for index because loop.index from swig starts on 1
             var attr = this.getAttribute('data-marker-index') - 1;
+            var description = this.getAttribute('data-description');
+            var title = this.getAttribute('data-title');
+
+            currentJobDescription.innerHTML = description;
+            currentJobTitle.innerHTML = title;
+
             // get longitude and latitude of the marker
             var latitude = markers[attr].getPosition().lat();
             var longitude = markers[attr].getPosition().lng();
