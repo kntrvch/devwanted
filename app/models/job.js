@@ -10,6 +10,10 @@ var JobSchema = new Schema({
   title: String,
   company: String,
   description: String,
+  address: {
+    type: String,
+    get: stripNumbers
+  },
   coordinates: {
     type: [Number],
     index: '2dsphere'
@@ -25,6 +29,14 @@ var JobSchema = new Schema({
     default: "KILL_CODE"
   }
 });
+
+function stripNumbers(a) {
+  if(a != undefined) {
+    // removes postal code
+    return a.replace(/[0-9]{2}-[0-9]{3}/, '');
+  }
+  return;
+}
 
 JobSchema.pre('save', function(next) {
   var baseString = this._id + Date.now();

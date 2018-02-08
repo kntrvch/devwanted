@@ -10,6 +10,9 @@
         </div>
         {% endif %}
         <form action="/jobs" method="POST">
+          <input type="hidden" name="lat" id="latitude">
+          <input type="hidden" name="long" id="longitude">
+          <input type="hidden" name="address" id="address">
         <fieldset>
             <legend>Add new job</legend>
             <div class="form-group">
@@ -22,22 +25,7 @@
             </div>
             <div class="form-group">
               <label for="address">Address</label>
-              <input placeholder="City, street..." name="address" id="address" type="text" class="form-control" value="">
-                  
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <!--<label for="lat">Latitude</label>-->
-                  <input type="hidden" class="form-control" name="lat" id="latitude" placeholder="Latitude">
-                </div>
-                </div>
-                <div class="col-md-6">
-                <div class="form-group">
-                  <!--<label for="long">Longitude</label>-->
-                  <input type="hidden" class="form-control" name="long" id="longitude" placeholder="Longitude">
-                </div>
-              </div>
+              <input placeholder="City, street..." id="autocomplete" type="text" class="form-control" value="">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
@@ -50,28 +38,25 @@
     </div>
   </div>
   <script>
-var latitudeInput = document.getElementById('latitude');
+    var latitudeInput = document.getElementById('latitude');
     var longitudeInput = document.getElementById('longitude');
-
-  var geocoder = new google.maps.Geocoder();
-
-  document.getElementById('address').addEventListener('keyup', function() {
-    geocodeAddress(geocoder);
-  });
+    var addressInput = document.getElementById('address');
 
 
-function geocodeAddress(geocoder) {
-  var address = document.getElementById('address').value;
-  geocoder.geocode({'address': address}, function(results, status) {
-    if (status === 'OK') {
-      console.log(results[0]);
-      latitudeInput.value = results[0].geometry.location.lat();
-      longitudeInput.value = results[0].geometry.location.lng();
-      console.log(latitudeInput.value + " | " +longitudeInput.value);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete(
+  (document.getElementById('autocomplete')),
+  {types: ['geocode']});
+  autocomplete.addListener('place_changed', getAddress);
+};
+
+  function getAddress() {
+    var place = autocomplete.getPlace();
+    console.log(place);
+    latitudeInput.value = place.geometry.location.lat();
+    longitudeInput.value = place.geometry.location.lng();
+    addressInput.value = place.formatted_address;
+  }
+
   </script>
 {% endblock %}

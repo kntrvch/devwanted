@@ -7,6 +7,10 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
+router.get('/', function (req, res, next) {
+    res.redirect(301, '/jobs');    
+  });
+
 router.get('/jobs', function (req, res, next) {
   Job.find().sort({ created: -1 }).exec(function (err, jobs) {
     if (err) return next(err);
@@ -56,7 +60,8 @@ router.post('/nearme', function (req, res, next) {
               title: 'Jobs',
               jobs: jobs,
               lat: -23.54312,
-              long: -46.642748
+              long: -46.642748,
+              distance: maxDistance
           });
       });
   });
@@ -74,6 +79,7 @@ router.post('/jobs', function (req, res, next) {
       company: req.body.company,
       title: req.body.title,
       description: req.body.description,
+      address: req.body.address,
       coordinates: [req.body.long, req.body.lat]
   };
   

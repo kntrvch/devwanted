@@ -15,15 +15,7 @@
                             
            <label for="longitude" class="sr-only">Longitude</label>
                             <input placeholder="Insert Longitude" name="longitude" id="longitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="">
-                            
-           <!--<label for="distance" class="sr-only">Distance</label>
-                            <select name="distance" id="distance" class="form-control mb-2 mr-sm-2">
-                                <option value="" disabled selected>Distance</option>
-                                <option value="0.2">200 m</option>
-                                <option value="2">2 Km</option>
-                                <option value="3">3 km</option>
-                                <option value="9">9 km</option>
-                            </select>-->
+
                             <div class="col-md-3">
                               <input type="text" name="distance" id="distance" value="">
                             </div>
@@ -35,6 +27,9 @@
                             </div>
                           </div>
                         </div>
+                        <div class="col-md-3">
+                              <code><span class="oi" data-glyph="location"></span> <span id="autoLat"></span>,<span id="autoLong"></span></code>
+                            </div>
                 </form>
                 <br>
             </div>
@@ -53,7 +48,7 @@
                     </div>
                     <strong>{{item.company}}</strong>
                     <p class="mb-1">{{item.description}}</p>
-                      <small class="text-muted">Donec id elit non mi porta.</small>
+                      <small class="text-muted">{{item.address}}</small>
                   </a>
                 {% endfor %}
               </div>
@@ -86,68 +81,21 @@
     var userLatitude, userLongitude;
     var latitudeInput = document.getElementById('latitude');
     var longitudeInput = document.getElementById('longitude');
+    var autoLat = document.getElementById('autoLat');
+    var autoLong = document.getElementById('autoLong');
 
-  var geocoder = new google.maps.Geocoder();
-
-  document.getElementById('address').addEventListener('keyup', function() {
-    geocodeAddress(geocoder);
-  });
+function initAutocomplete() {
 
 
-function geocodeAddress(geocoder) {
-  var address = document.getElementById('address').value;
-  geocoder.geocode({'address': address}, function(results, status) {
-    if (status === 'OK') {
-      console.log(results[0]);
-      latitudeInput.value = results[0].geometry.location.lat();
-      longitudeInput.value = results[0].geometry.location.lng();
-      console.log(latitudeInput.value + " | " +longitudeInput.value);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
+  
+  autocomplete = new google.maps.places.Autocomplete(
+      (document.getElementById('address')),
+      {types: ['geocode']});
 
-    function getCurrentPosition() {
-        // Check boreswer/navigator support       
-        if (navigator.geolocation) {
-            var options = {
-                enableHighAccuracy: true,
-                timeout: Infinity,
-                maximumAge: 0
-            };
-            navigator.geolocation.watchPosition(getUserPosition, trackError, options);
-        } else {
-            alert('Ops; Geolocation is not supported');
-        }
-        // Get user position and place a icon on map       
-        function getUserPosition(position) {
-            // Check longitude and latitude    
-            latitudeInput.value = userLatitude = position.coords.latitude;
-            longitudeInput.value = userLongitude = position.coords.longitude;
-        }
-        // Setup a error function         
-        function trackError(error) {
-            var err = document.getElementById('map');
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    err.innerHTML = "User denied Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    err.innerHTML = "Information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    err.innerHTML = "Location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    err.innerHTML = "An unknown error.";
-                    break;
-            }
-        }
-    }
-    getCurrentPosition();
 
-    var loadMap = function () {
+  autocomplete.addListener('place_changed', getAddress);
+
+  var loadMap = function () {
         // Center map with current lat and long (Simulated with fixed point for this example)
         var googlePos = new google.maps.LatLng(userLatitude, userLongitude);
         // Setup map options
@@ -155,174 +103,7 @@ function geocodeAddress(geocoder) {
             zoom: 12,
             center: googlePos,
             mapTypeId: google.maps.MapTypeId.ROADMAP, 
-            styles: [
-              {
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#f5f5f5"
-                  }
-                ]
-              },
-              {
-                "elementType": "labels.icon",
-                "stylers": [
-                  {
-                    "visibility": "off"
-                  }
-                ]
-              },
-              {
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#616161"
-                  }
-                ]
-              },
-              {
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                  {
-                    "color": "#f5f5f5"
-                  }
-                ]
-              },
-              {
-                "featureType": "administrative.land_parcel",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#bdbdbd"
-                  }
-                ]
-              },
-              {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#eeeeee"
-                  }
-                ]
-              },
-              {
-                "featureType": "poi",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#757575"
-                  }
-                ]
-              },
-              {
-                "featureType": "poi.business",
-                "stylers": [
-                  {
-                    "visibility": "off"
-                  }
-                ]
-              },
-              {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#e5e5e5"
-                  }
-                ]
-              },
-              {
-                "featureType": "poi.park",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#9e9e9e"
-                  }
-                ]
-              },
-              {
-                "featureType": "road",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#ffffff"
-                  }
-                ]
-              },
-              {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#757575"
-                  }
-                ]
-              },
-              {
-                "featureType": "road.highway",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#dadada"
-                  }
-                ]
-              },
-              {
-                "featureType": "road.highway",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#616161"
-                  }
-                ]
-              },
-              {
-                "featureType": "road.local",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#9e9e9e"
-                  }
-                ]
-              },
-              {
-                "featureType": "transit.line",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#e5e5e5"
-                  }
-                ]
-              },
-              {
-                "featureType": "transit.station",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#eeeeee"
-                  }
-                ]
-              },
-              {
-                "featureType": "water",
-                "elementType": "geometry",
-                "stylers": [
-                  {
-                    "color": "#c9c9c9"
-                  }
-                ]
-              },
-              {
-                "featureType": "water",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                  {
-                    "color": "#9e9e9e"
-                  }
-                ]
-              }
-            ]
+            styles: mapStyle
         };
         // Set a variable to get the HTML div
         var mapObj = document.getElementById('map');
@@ -392,8 +173,80 @@ function geocodeAddress(geocoder) {
         });
     }
     };
-    // load the map function
-    window.onload = loadMap;
 
+getCurrentPosition();
+// load the map function
+    window.onload = loadMap;
+      };
+
+
+  function getAddress() {
+    var place = autocomplete.getPlace();
+    console.log(place);
+    latitudeInput.value = place.geometry.location.lat();
+      longitudeInput.value = place.geometry.location.lng();
+  }
+
+
+function geocodeAddress(geocoder) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+      console.log(results[0]);
+      latitudeInput.value = results[0].geometry.location.lat();
+      longitudeInput.value = results[0].geometry.location.lng();
+      console.log(latitudeInput.value + " | " +longitudeInput.value);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+    function getCurrentPosition() {
+        // Check boreswer/navigator support       
+        if (navigator.geolocation) {
+            var options = {
+                enableHighAccuracy: true,
+                timeout: Infinity,
+                maximumAge: 0
+            };
+            navigator.geolocation.watchPosition(getUserPosition, trackError, options);
+        } else {
+            alert('Ops; Geolocation is not supported');
+        }
+        // Get user position and place a icon on map       
+        function getUserPosition(position) {
+            // Check longitude and latitude    
+            autoLat.innerHTML = latitudeInput.value = userLatitude = position.coords.latitude;
+            autoLong.innerHTML = longitudeInput.value = userLongitude = position.coords.longitude;
+        }
+        // Setup a error function         
+        function trackError(error) {
+            var err = document.getElementById('map');
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    err.innerHTML = "User denied Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    err.innerHTML = "Information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    err.innerHTML = "Location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    err.innerHTML = "An unknown error.";
+                    break;
+            }
+        }
+    };
+    
+    $(function(){
+    $("#distance").ionRangeSlider({
+      min: 1,
+      max: 100, 
+      from: {{distance || 10}}, 
+      postfix: " km"
+    });
+  });
 </script>
 {% endblock %}
