@@ -74,6 +74,22 @@ router.get('/jobs/add', function (req, res, next) {
       });
   });
 
+  router.get('/job/:slug', function (req, res, next) {
+        var slug = req.params.slug;
+        Job.find({
+            'slug': slug
+        }, function (err, job) {
+            if (err) {
+                return res.status(404).json(err);
+            }
+        
+            res.render('job-view', {
+                title: job[0].title + ", " + job[0].address + " | devwanted.com",
+                job: job[0]
+            });
+        });
+    });
+
 router.post('/jobs', function (req, res, next) {
   var j = {
       email: req.body.email,

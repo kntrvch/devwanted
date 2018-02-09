@@ -35,7 +35,7 @@
       </li>
     </ul>
     <div class="my-2 my-lg-0">
-       <a class="btn btn-secondary my-2 my-sm-0" href="/jobs/add">Add job</a>
+       <a class="btn btn-success my-2 my-sm-0" href="/jobs/add">Add job</a>
     </div>
   </div>
 </nav>

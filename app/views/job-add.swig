@@ -24,6 +24,10 @@
               <input type="text" class="form-control" name="title" id="title" placeholder="Title">
             </div>
             <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" class="form-control" name="company" id="company" placeholder="Company">
+            </div>
+            <div class="form-group">
               <label for="address">Address</label>
               <input placeholder="City, street..." id="autocomplete" type="text" class="form-control" value="">
             </div>

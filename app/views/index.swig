@@ -41,14 +41,14 @@
             <div class="nano-content">
               <div class="list-group">
                 {% for item in jobs %}
-                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
+                  <a href="job/{{item.slug}}" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{item.title}}</h5>
                       <small class="text-muted">{{item.created}}</small>
                     </div>
-                    <strong>{{item.company}}</strong>
+                    <strong>{{item.company}}</strong><br>
                     <!--<p class="mb-1">{{item.description}}</p>-->
-                      <small class="text-muted">{{item.address}}</small>
+                    <small class="text-muted">{{item.address}}</small>
                   </a>
                 {% endfor %}
               </div>
