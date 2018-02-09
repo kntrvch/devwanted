@@ -13,6 +13,7 @@ var JobSchema = new Schema({
   title: String,
   company: String,
   description: String,
+  imageUrl: String,
   slug: { 
     type: String, 
     slug: ["title", "address"], 
@@ -31,7 +32,7 @@ var JobSchema = new Schema({
       type: Date,
       default: Date.now, 
       get: timeAgo, 
-      expires: 30*24*3600
+      expires: 3600
   }, 
   deletionKey: { 
     type: String,

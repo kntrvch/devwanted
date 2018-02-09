@@ -62,4 +62,26 @@ body {
   background: #2C3E50;
   background: linear-gradient(to top, #1b3147 0, #42586e 100%); }
 
+.job-details-label {
+  position: absolute;
+  z-index: 1020;
+  display: none; }
+
+@media (min-width: 576px) {
+  .job-details-label {
+    width: 100%;
+    padding: 0; } }
+@media (min-width: 768px) {
+  .job-details-label {
+    width: 100%;
+    padding: 0; } }
+@media (min-width: 992px) {
+  .job-details-label {
+    width: 50%;
+    padding: 5px; } }
+@media (min-width: 1200px) {
+  .job-details-label {
+    width: 50%;
+    padding: 5px; } }
+
 /*# sourceMappingURL=style.css.map */

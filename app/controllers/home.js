@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
   });
 
 router.get('/jobs', function (req, res, next) {
-  Job.find().sort({ created: -1 }).exec(function (err, jobs) {
+  Job.find().sort({ created: -1 }).limit(10).exec(function (err, jobs) {
     if (err) return next(err);
     res.render('index', {
       title: 'Job board',

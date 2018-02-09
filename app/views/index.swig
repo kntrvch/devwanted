@@ -3,22 +3,18 @@
 {% block content %}
   <div class="container-fluid">
     <div class="row">
-<div class="col-md-12">
-                <form action="/nearme" method="POST" class="form-inline filter">
-
+                <form action="/nearme" method="POST" class="form-inline w-100 filter">
+                  <input name="latitude" id="latitude" type="hidden" value="{{lat}}">
+                  <input name="longitude" id="longitude" type="hidden" value="{{long}}">
+                
+                <div class="col-md-4 mb-5">
                 <label for="address" class="sr-only">Address</label>
-                            <input placeholder="City, street..." name="address" id="address" type="text" class="form-control-lg mb-2 mr-sm-2" value="{{formattedAddress}}">
-                   
-
-              <label for="latitude" class="sr-only">Latitude</label>
-                            <input placeholder="Insert latitude" name="latitude" id="latitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="{{lat}}">
-                            
-           <label for="longitude" class="sr-only">Longitude</label>
-                            <input placeholder="Insert Longitude" name="longitude" id="longitude" type="hidden" class="form-control-lg mb-2 mr-sm-2" value="{{long}}">
-
-                            <div class="col-md-3">
+                            <input placeholder="City, street..." name="address" id="address" type="text" class="form-control-lg mb-2 mr-sm-2 w-100" value="{{formattedAddress}}">
+</div>
+                            <div class="col-md-4 mb-5">
                               <input type="text" name="distance" id="distance" value="">
                             </div>
+                            <div class="col-md-4 mb-5">
                         <div class="input-group">
                           <button class="btn-lg btn-primary mb-2" type="submit" name="action">Search</button>
                           <div class="input-group-append ml-2 mb-2">
@@ -27,37 +23,42 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-3">
-                              <code><span class="oi" data-glyph="location"></span> <span id="autoLat"></span>,<span id="autoLong"></span></code>
-                            </div>
+                        </div>
                 </form>
                 <br>
-            </div>
     </div>
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-4 mb-3">
         <div class="bs-component">
           <div id="jobs" class="nano">
             <div class="nano-content">
               <div class="list-group">
                 {% for item in jobs %}
-                  <a href="job/{{item.slug}}" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
+                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-link="job/{{item.slug}}" data-company="{{item.company}}" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{item.title}}</h5>
                       <small class="text-muted">{{item.created}}</small>
                     </div>
                     <strong>{{item.company}}</strong><br>
-                    <!--<p class="mb-1">{{item.description}}</p>-->
                     <small class="text-muted">{{item.address}}</small>
                   </a>
                 {% endfor %}
               </div>
-              <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-8">
+      <div class="col-lg-8 mb-3">
+        <div class="job-details-label">
+          <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title"></h4>
+                  <h6 class="card-subtitle mb-2 text-muted"></h6>
+                  <!--<p class="card-text"></p>-->
+                  <a href="#" class="card-link">more</a>
+                </div>
+              </div>
+        </div>
         <div id="map" style="height: 600px; width: 100%; margin-bottom: 20px">
           <div class="loader">
             <span>/</span><span>/</span>
@@ -68,9 +69,8 @@
     <div class="row">
       <div class="col-md-12">
             <div id="current-job-info" class="bs-component p-3">
-              <h2 id="current-job-title">Example body text</h2>
-              <div id="current-job-description">Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. 
-              Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</div>
+              <h2 id="current-job-title"></h2>
+              <div id="current-job-description"></div>
     
             </div>
 
@@ -81,16 +81,12 @@
     var userLatitude, userLongitude;
     var latitudeInput = document.getElementById('latitude');
     var longitudeInput = document.getElementById('longitude');
-    var autoLat = document.getElementById('autoLat');
-    var autoLong = document.getElementById('autoLong');
     var addressInput = document.getElementById('address');
     var currentJobTitle = document.getElementById('current-job-title');
     var currentJobDescription = document.getElementById('current-job-description');
 
 function initAutocomplete() {
 
-
-  
   autocomplete = new google.maps.places.Autocomplete(
       (addressInput),
       {types: ['geocode']});
@@ -124,6 +120,7 @@ function initAutocomplete() {
             map: googleMap,
             zoom: 13,
             position: latLng,
+            icon: 'img/marker.png',
             animation: google.maps.Animation.DROP
         });
 
@@ -134,16 +131,40 @@ function initAutocomplete() {
         // Add an event listener to click on each marker and show an info window
         google.maps.event.addListener(marker, 'click', function () {
             // using the tittle from the Swig looping
-            infowindow.setContent('<p>' + " {{ item.title }} " + '</p>');
-            infowindow.open(googleMap, this);
+            //infowindow.setContent('<b>' + " {{ item.title }} " + '</b><br><small>' + " {{ item.company }} " + '</small>');
+            //infowindow.open(googleMap, this);
         });
         google.maps.event.addListener(marker, 'click', function () {
+            $(".job-details-label").hide();
+            $(".nano").nanoScroller({ scrollTo: $('[data-marker-index={{ loop.index }}]') });
+            $('.pan-to-marker').removeClass("active");
+            $('[data-marker-index={{ loop.index }}]').addClass("active");
+
+            var attr = $('[data-marker-index={{ loop.index }}]').attr('data-marker-index') - 1;
+            var description = $('[data-marker-index={{ loop.index }}]').attr('data-description');
+            var title = $('[data-marker-index={{ loop.index }}]').attr('data-title');
+            var company = $('[data-marker-index={{ loop.index }}]').attr('data-company');
+            var link = $('[data-marker-index={{ loop.index }}]').attr('data-link');
+
+            currentJobDescription.innerHTML = description;
+            currentJobTitle.innerHTML = title;
+
+            $(".job-details-label .card-title").html(title);
+            $(".job-details-label .card-subtitle").html(company);
+            //$(".job-details-label .card-text").html(description);
+            $(".job-details-label .card-link").attr("href", link);
+            
+            $(".job-details-label").fadeIn();
+
             markers.forEach(function (element) {
+                element.icon = 'img/marker.png';
                 element.setAnimation(null);
             }, this);
             if (this.getAnimation() !== null) {
+                this.icon = 'img/marker.png';
                 this.setAnimation(null);
             } else {
+                this.icon = 'img/marker_active.png';
                 this.setAnimation(google.maps.Animation.BOUNCE);
             }
         });
@@ -156,6 +177,7 @@ function initAutocomplete() {
     
     for (var i = 0, len = els.length; i < len; i++) {
         els[i].addEventListener("click", function (e) {
+            $(".job-details-label").hide();
             [].forEach.call(els, function(el) {
                 el.classList.remove("active");
             });
@@ -165,9 +187,16 @@ function initAutocomplete() {
             var attr = this.getAttribute('data-marker-index') - 1;
             var description = this.getAttribute('data-description');
             var title = this.getAttribute('data-title');
+            var company = this.getAttribute('data-company');
+            var link = this.getAttribute('data-link');
 
             currentJobDescription.innerHTML = description;
             currentJobTitle.innerHTML = title;
+
+            $(".job-details-label .card-title").html(title);
+            $(".job-details-label .card-subtitle").html(company);
+            //$(".job-details-label .card-text").html(description);
+            $(".job-details-label .card-link").attr("href", link);
 
             // get longitude and latitude of the marker
             var latitude = markers[attr].getPosition().lat();
@@ -176,10 +205,12 @@ function initAutocomplete() {
             googleMap.setCenter({ lat: latitude, lng: longitude });
             googleMap.setZoom(18);
             markers.forEach(function (element) {
+                element.icon = 'img/marker.png';
                 element.setAnimation(null);
             }, this);
+            markers[attr].icon = 'img/marker_active.png';
             markers[attr].setAnimation(google.maps.Animation.BOUNCE);
-
+            $(".job-details-label").fadeIn();
         });
     }
     };
@@ -232,8 +263,8 @@ function geocodeAddress(geocoder) {
               latitudeInput.value = position.coords.latitude;
               longitudeInput.value = position.coords.longitude;
             }   
-            autoLat.innerHTML = userLatitude = position.coords.latitude;
-            autoLong.innerHTML = userLongitude = position.coords.longitude;
+            userLatitude = position.coords.latitude;
+            userLongitude = position.coords.longitude;
             
         }
         // Setup a error function         
