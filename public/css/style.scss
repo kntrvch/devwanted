@@ -80,6 +80,18 @@ body {
   display: none;
 }
 
+.btn, 
+.btn-lg {
+  cursor: pointer;
+}
+
+.card .close {
+  color: #333;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { 
   .job-details-label {

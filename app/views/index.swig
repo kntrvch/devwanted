@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-md-4 mb-5">
                         <div class="input-group">
-                          <button class="btn-lg btn-primary mb-2" type="submit" name="action">Search</button>
+                          <button class="btn btn-lg btn-primary mb-2" type="submit" name="action">Search</button>
                           <div class="input-group-append ml-2 mb-2">
                             <div class="loader-inline">
                               <span>/</span><span>/</span>
@@ -51,11 +51,12 @@
       <div class="col-lg-8 mb-3">
         <div class="job-details-label">
           <div class="card">
+              <button type="button" class="close" data-dismiss="card">&times;</button>
                 <div class="card-body">
                   <h4 class="card-title"></h4>
                   <h6 class="card-subtitle mb-2 text-muted"></h6>
                   <!--<p class="card-text"></p>-->
-                  <a href="#" class="card-link">more</a>
+                  <a href="#" class="card-link btn btn-primary btn-sm float-right" target="_blank">more</a>
                 </div>
               </div>
         </div>
@@ -288,13 +289,16 @@ function geocodeAddress(geocoder) {
     };
     
     $(function(){
-    $("#distance").ionRangeSlider({
-      min: 0.5,
-      max: 100, 
-      step: 0.5,
-      from: {{distance || 10}}, 
-      postfix: " km"
-    });
+      $("#distance").ionRangeSlider({
+        min: 0.5,
+        max: 100, 
+        step: 0.5,
+        from: {{distance || 10}}, 
+        postfix: " km"
+      });
+      $(".card .close").click(function() {
+        $(this).parents(".job-details-label").fadeOut();
+      });
   });
 </script>
 {% endblock %}

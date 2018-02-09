@@ -67,6 +67,16 @@ body {
   z-index: 1020;
   display: none; }
 
+.btn,
+.btn-lg {
+  cursor: pointer; }
+
+.card .close {
+  color: #333;
+  position: absolute;
+  right: 10px;
+  top: 5px; }
+
 @media (min-width: 576px) {
   .job-details-label {
     width: 100%;

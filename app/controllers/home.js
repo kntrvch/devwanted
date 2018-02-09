@@ -105,12 +105,14 @@ router.post('/jobs', function (req, res, next) {
   jobs.save(function(error, item) {
       if (error) {
           return res.status(400).send({
-              message: error
+              message: error, 
+              context: 'danger',
           });
       }
 
       res.render('job-add', {
-          message: 'success',
+          message: '<b>Success!</b>See your job ad <a href="/job/' + item.slug + '" class="alert-link">here</a>',
+          context: 'success',
           obj: item
       });
 

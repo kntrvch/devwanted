@@ -11,8 +11,8 @@
         {% endif %}
         <h1>{{job.title}}</h1>
         <p class="lead">{{job.address}}</p>
-        <p class="mt-5">{{job.description}}</p>
-        <p class="mt-5"><a href="/jobs">back</a></p>
+        <p class="mt-5">{{job.description | raw}}</p>
+        <p class="mt-5"><a href="/jobs" class="card-link btn btn-primary btn-sm">back</a></p>
       </div>
     </div>
   </div>

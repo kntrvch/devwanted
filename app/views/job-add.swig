@@ -1,12 +1,12 @@
 {% extends 'layout.swig' %} 
 {% block content %}
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-6"> 
         {% if message %}
-        <div class="alert alert-dismissible alert-success">
+        <div class="alert alert-dismissible alert-{{context}}">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>{{ message }}</strong>
+          {{ message | raw }}
         </div>
         {% endif %}
         <form action="/jobs" method="POST">
@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea class="form-control" name="description" id="description" rows="5" placeholder="Description"></textarea>
+              <textarea class="form-control summernote" name="description" id="description" rows="5" placeholder="Description"></textarea>
             </div>
           </fieldset>
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -56,11 +56,24 @@ function initAutocomplete() {
 
   function getAddress() {
     var place = autocomplete.getPlace();
-    console.log(place);
     latitudeInput.value = place.geometry.location.lat();
     longitudeInput.value = place.geometry.location.lng();
     addressInput.value = place.formatted_address;
   }
+
+  $(function() {
+    $('.summernote').summernote({
+        placeholder: 'Job description...',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['codeview'],
+          ['fullscreen']
+        ]
+      });
+  });
 
   </script>
 {% endblock %}
