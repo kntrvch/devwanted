@@ -148,6 +148,9 @@ router.post('/jobs', loggedIn, function (req, res, next) {
         title: req.body.title,
         description: req.body.description,
         address: req.body.address,
+        thumbnailUrl: req.body.thumbnailUrl,
+        imageUrl: req.body.imageUrl,
+        www: req.body.www,
         coordinates: [req.body.long, req.body.lat], 
         user: req.user
     };

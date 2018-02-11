@@ -13,7 +13,9 @@ var JobSchema = new Schema({
   title: String,
   company: String,
   description: String,
+  thumbnailUrl: String,
   imageUrl: String,
+  www: String,
   slug: { 
     type: String, 
     slug: ["title", "address"], 

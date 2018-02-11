@@ -93,5 +93,8 @@ body {
   .job-details-label {
     width: 50%;
     padding: 5px; } }
+@media print {
+  .img-responsive {
+    max-width: 150px; } }
 
 /*# sourceMappingURL=style.css.map */

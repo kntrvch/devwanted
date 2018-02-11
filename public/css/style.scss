@@ -123,3 +123,9 @@ body {
     padding: 5px;
   }
 }
+
+@media print {
+  .img-responsive {
+    max-width: 150px;
+  }
+}

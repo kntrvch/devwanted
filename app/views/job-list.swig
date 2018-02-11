@@ -21,7 +21,7 @@
               <td><a href="/job/{{item.slug}}" target="_blank">{{item.title}}</a></td>
               <td>{{item.company}}</td>
               <td>{{item.address}}</td>
-              <td>{{item.createdAt|date('d-m-Y')}}</td>
+              <td>{{item.createdAt|date('Y-m-d H:i')}}</td>
             </tr>
           {% endfor %}
         </tbody>

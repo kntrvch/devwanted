@@ -9,8 +9,14 @@
           <strong>{{ message }}</strong>
         </div>
         {% endif %}
-        <h1>{{job.title}}</h1>
-        <p class="lead">{{job.address}}</p>
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="mb-3">{{job.title}}</h1>
+          </div>
+          <div class="col-md-3" style="background-image:url({{job.imageUrl}});background-position:center;background-size:contain;background-repeat:no-repeat;"></div>
+        </div>
+        <p class="lead">{{job.company}}</p>
+        <strong>{{job.address}}</strong>
         <p class="mt-5">{{job.description | raw}}</p>
         <p class="mt-5"><a href="/jobs" class="card-link btn btn-primary btn-sm">back</a></p>
       </div>

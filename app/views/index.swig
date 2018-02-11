@@ -34,13 +34,18 @@
             <div class="nano-content">
               <div class="list-group">
                 {% for item in jobs %}
-                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-link="job/{{item.slug}}" data-company="{{item.company}}" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
+                  <a href="#" class="pan-to-marker list-group-item list-group-item-action flex-column align-items-start" data-address="{{item.address}}" data-link="job/{{item.slug}}" data-company="{{item.company}}" data-title="{{item.title}}" data-description="{{item.description}}" data-marker-index="{{loop.index}}">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{item.title}}</h5>
-                      <small class="text-muted">{{item.created}}</small>
+                      <div class="float-right" style="background-image:url({{item.imageUrl}});background-position:center;background-size:contain;background-repeat:no-repeat;width:90px;height:40px;">
+                        <!--<img src="{{item.thumbnailUrl}}"  alt="{{item.company}}">-->
+                      </div>
+                      <!--<small class="text-muted">{{item.created}}</small>-->
                     </div>
+                    
                     <strong>{{item.company}}</strong><br>
                     <small class="text-muted">{{item.address}}</small>
+                    <small class="text-muted float-right">{{item.created}}</small>
                   </a>
                 {% endfor %}
               </div>
@@ -55,7 +60,7 @@
                 <div class="card-body">
                   <h4 class="card-title"></h4>
                   <h6 class="card-subtitle mb-2 text-muted"></h6>
-                  <!--<p class="card-text"></p>-->
+                  <p class="card-text"></p>
                   <a href="#" class="card-link btn btn-primary btn-sm float-right" target="_blank">more</a>
                 </div>
               </div>
@@ -146,13 +151,14 @@ function initAutocomplete() {
             var title = $('[data-marker-index={{ loop.index }}]').attr('data-title');
             var company = $('[data-marker-index={{ loop.index }}]').attr('data-company');
             var link = $('[data-marker-index={{ loop.index }}]').attr('data-link');
+            var address = $('[data-marker-index={{ loop.index }}]').attr('data-address');
 
             currentJobDescription.innerHTML = description;
             currentJobTitle.innerHTML = title;
 
             $(".job-details-label .card-title").html(title);
             $(".job-details-label .card-subtitle").html(company);
-            //$(".job-details-label .card-text").html(description);
+            $(".job-details-label .card-text").html(address);
             $(".job-details-label .card-link").attr("href", link);
             
             $(".job-details-label").fadeIn();
@@ -190,13 +196,14 @@ function initAutocomplete() {
             var title = this.getAttribute('data-title');
             var company = this.getAttribute('data-company');
             var link = this.getAttribute('data-link');
+            var address = this.getAttribute('data-address');
 
             currentJobDescription.innerHTML = description;
             currentJobTitle.innerHTML = title;
 
             $(".job-details-label .card-title").html(title);
             $(".job-details-label .card-subtitle").html(company);
-            //$(".job-details-label .card-text").html(description);
+            $(".job-details-label .card-text").html(address);
             $(".job-details-label .card-link").attr("href", link);
 
             // get longitude and latitude of the marker
