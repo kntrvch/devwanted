@@ -7,7 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var session = require('express-session');
 var swig = require('swig');
+var passport = require('passport'),
+User = require('../app/models/user'), 
+LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(app, config) {
   var env = process.env.NODE_ENV || 'development';
@@ -32,6 +36,23 @@ module.exports = function(app, config) {
   app.use(compress());
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
+  app.use(session({
+    secret: 'abcdefg',
+    resave: true,
+    saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(function (req, res, next) {
+    if(req.user) {
+      res.locals.username = req.user.username;
+      res.locals.loggedIn = true;
+    } else {
+      res.locals.loggedIn = false;
+    }
+    next();
+  });
 
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
@@ -63,5 +84,10 @@ module.exports = function(app, config) {
         title: 'error'
       });
   });
+
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 };

@@ -37,7 +37,14 @@ var JobSchema = new Schema({
   deletionKey: { 
     type: String,
     default: "KILL_CODE"
-  }
+  }, 
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
+},
+{
+  timestamps: true
+}).index({  
+  title: 'text',  
+  description: 'text'
 });
 
 function stripNumbers(a) {
