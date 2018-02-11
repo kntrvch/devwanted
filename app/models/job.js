@@ -40,7 +40,8 @@ var JobSchema = new Schema({
     type: String,
     default: "KILL_CODE"
   }, 
-  user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }, 
+  active: { type: Boolean, default: true }
 },
 {
   timestamps: true

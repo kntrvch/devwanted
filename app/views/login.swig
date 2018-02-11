@@ -4,7 +4,7 @@
     <div class="row justify-content-md-center">
       <div class="col-md-5"> 
         {% if message %}
-        <div class="alert alert-dismissible alert-success">
+        <div class="alert alert-dismissible alert-{{context}}">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>{{ message }}</strong>
         </div>
@@ -23,6 +23,9 @@
             </fieldset>
             <input type="submit" value="Log In" class="btn btn-primary"/>
         </form>
+      </div>
+      <div class="col-md-12">
+        <p class="text-center mt-5">Don't have an account? Register <a href="/register">here</a></p>
       </div>
     </div>
   </div>

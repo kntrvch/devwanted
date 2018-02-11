@@ -9,7 +9,7 @@ function loggedIn(req, res, next) {
     if (req.user) {
         next();
     } else {
-        res.redirect('/login');
+        res.redirect('/login?auth=false');
     }
 }
 
@@ -34,7 +34,17 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-    res.render('login', { user: req.user });
+    if(req.query.auth == 'false') {
+        res.render('login', { 
+            message: 'You must be logged in to use this functionality.',
+            context: 'info',
+            user: req.user 
+        });
+    } else {
+        res.render('login', { 
+            user: req.user 
+        });
+    }
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
