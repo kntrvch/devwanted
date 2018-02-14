@@ -2,20 +2,16 @@
 
 var mongoose = require('mongoose'),
   passportLocalMongoose = require('passport-local-mongoose'),
-  Schema = mongoose.Schema;
-  
-  
-  var User = new Schema({
-      username: String,
-      password: String
-  });
-  
-  User.plugin(passportLocalMongoose);
+  Schema = mongoose.Schema, 
+  bcrypt = require('bcrypt-nodejs');
 
-  User.methods.validPassword = function(pwd) {
-    // EXAMPLE CODE!
-    return (this.password === pwd);
-  };
-  
-  module.exports = mongoose.model('User', User);
+
+var User = new Schema({
+  username: String,
+  password: String
+});
+
+User.plugin(passportLocalMongoose);
+
+module.exports = mongoose.model('User', User);
 

@@ -3,18 +3,24 @@
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-5"> 
-        {% if message %}
-        <div class="alert alert-dismissible alert-{{context}}">
+        {% if messageInfo.length > 0 %}
+        <div class="alert alert-dismissible alert-info">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>{{ message }}</strong>
+          <strong>{{ messageInfo }}</strong>
+        </div>
+        {% endif %}
+        {% if messageError.length > 0 %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>{{ messageError }}</strong>
         </div>
         {% endif %}
         <form action="/login" method="post">
          <fieldset>
             <legend>Log In</legend>
             <div class="form-group">
-                <label for="usernameInput">Username</label>
-                <input id="usernameInput" type="text" name="username" class="form-control"/>
+                <label for="emailInput">Email</label>
+                <input id="emailInput" type="text" name="email" class="form-control"/>
             </div>
             <div class="form-group">
                 <label for="passwordInput">Password</label>

@@ -10,16 +10,17 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var swig = require('swig');
 var passport = require('passport'),
-User = require('../app/models/user'), 
-LocalStrategy = require('passport-local').Strategy;
+  User = require('../app/models/user'),
+  LocalStrategy = require('passport-local').Strategy,
+  flash = require('connect-flash');
 
-module.exports = function(app, config) {
+module.exports = function (app, config) {
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
-  
+
   app.engine('swig', swig.renderFile);
-  if(env == 'development'){
+  if (env == 'development') {
     app.set('view cache', false);
     swig.setDefaults({ cache: false });
   }
@@ -43,9 +44,10 @@ module.exports = function(app, config) {
   }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 
   app.use(function (req, res, next) {
-    if(req.user) {
+    if (req.user) {
       res.locals.username = req.user.username;
       res.locals.loggedIn = true;
     } else {
@@ -64,8 +66,8 @@ module.exports = function(app, config) {
     err.status = 404;
     next(err);
   });
-  
-  if(app.get('env') === 'development'){
+
+  if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
       res.render('error', {
@@ -78,16 +80,67 @@ module.exports = function(app, config) {
 
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: {},
-        title: 'error'
-      });
+    res.render('error', {
+      message: err.message,
+      error: {},
+      title: 'error'
+    });
   });
 
-// passport config
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+  // passport config
+
+
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+
+  passport.use('local-register', new LocalStrategy({
+    // by default, local strategy uses username and password, we will override with email
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, username, password, done) {
+
+      // find a user whose email is the same as the forms email
+      // we are checking to see if the user trying to login already exists
+      User.findOne({ 'username': username }, function (err, user) {
+        // if there are any errors, return the error
+
+        if (err)
+          return done(err);
+
+        // check to see if theres already a user with that email
+        if (user) {
+          return done(null, false, req.flash('error', 'That email is already taken.'));
+        } else {
+
+          User.register(new User({ username: username }), password, function (err, user) {
+            if (err)
+              throw err;
+            return done(null, user);
+          });
+        }
+
+      });
+
+    }));
+
+  passport.use('local-login', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+  }, function (req, username, password, done) {
+    var authenticate = User.authenticate();
+    authenticate(username, password, function (err, authenticated) {
+      if (!authenticated) {
+        return done(null, false, {
+          message: 'Incorrect username or password.'
+        });
+      } else {
+        return done(null, authenticated);
+      }
+
+    });
+  }));
 
 };

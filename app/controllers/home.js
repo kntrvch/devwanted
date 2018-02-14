@@ -9,7 +9,9 @@ function loggedIn(req, res, next) {
     if (req.user) {
         next();
     } else {
-        res.redirect('/login?auth=false');
+        //res.redirect('/login?auth=false');
+        req.flash('info', 'You must be logged in to use this functionality.');
+        res.redirect('/login');
     }
 }
 
@@ -18,36 +20,36 @@ module.exports = function (app) {
 };
 
 router.get('/register', function (req, res) {
-    res.render('register', {});
-});
-
-router.post('/register', function (req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
-        if (err) {
-            return res.render('register', { user: user });
-        }
-
-        passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
-        });
+    res.render('register', {
+        messageError: req.flash('error'),
+        messageInfo: req.flash('info')
     });
 });
 
-router.get('/login', function (req, res) {
-    if(req.query.auth == 'false') {
-        res.render('login', { 
-            message: 'You must be logged in to use this functionality.',
-            context: 'info',
-            user: req.user 
-        });
-    } else {
-        res.render('login', { 
-            user: req.user 
-        });
-    }
+router.post('/register', passport.authenticate('local-register', {
+    successRedirect: '/',
+    failureRedirect: '/register',
+    failureFlash: true
+}), function (req, res) {
+    res.redirect('/');
 });
 
-router.post('/login', passport.authenticate('local'), function (req, res) {
+router.get('/login', function (req, res) {
+    
+        res.render('login', { 
+            user: req.user, 
+            messageError: req.flash('error'),
+            messageInfo: req.flash('info')
+        });
+    
+});
+
+router.post('/login', passport.authenticate('local-login', 
+{ 
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true 
+}), function (req, res) {
     res.redirect('/');
 });
 
