@@ -33,8 +33,7 @@ var JobSchema = new Schema({
   created: {
       type: Date,
       default: Date.now, 
-      get: timeAgo, 
-      expires: 3600
+      get: timeAgo
   }, 
   deletionKey: { 
     type: String,
