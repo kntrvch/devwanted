@@ -16,7 +16,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/map-style.js"></script>
-  <script src="/js/script.js"></script>
 
   {% if ENV_DEVELOPMENT %}
     <script src="http://localhost:35729/livereload.js"></script>
@@ -28,7 +27,6 @@
     });
   });
 </script>
-<script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -84,7 +82,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/js/ion.rangeSlider.min.js"></script>
-
-
+<script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
+<script src="/js/script.js"></script>
 </body>
 </html>
