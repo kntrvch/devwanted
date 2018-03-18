@@ -82,7 +82,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/js/ion.rangeSlider.min.js"></script>
-<script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
+
 
 </body>
 </html>
