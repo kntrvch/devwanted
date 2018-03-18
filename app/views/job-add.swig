@@ -96,4 +96,5 @@ function initAutocomplete() {
   });
 
   </script>
+  <script src="/js/script.js"></script>
 {% endblock %}
