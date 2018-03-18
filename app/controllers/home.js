@@ -96,6 +96,7 @@ router.post('/nearme', function (req, res, next) {
 
             "$geoNear": {
                 "near": { "type": "Point", "coordinates": coords },
+                "distanceField": "dist.calculated",
                 "maxDistance": maxDistance * 1609.34,
                 "spherical": true
              }
