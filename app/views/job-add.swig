@@ -96,5 +96,6 @@ function initAutocomplete() {
   });
 
   </script>
+  <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
   <script src="/js/script.js"></script>
 {% endblock %}
