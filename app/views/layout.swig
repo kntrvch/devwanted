@@ -28,6 +28,7 @@
   });
 </script>
 <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
+{% raw %}
 <script type="text/javascript">
 $(function() {
   $("#logoButton").on('click', function() {
@@ -47,6 +48,7 @@ $(function() {
       });
 });
 </script>
+{% endraw %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
