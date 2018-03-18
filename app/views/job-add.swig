@@ -81,6 +81,10 @@ function initAutocomplete() {
     addressInput.value = place.formatted_address;
   }
 
+  $(function() {
+    
+  });
+
   </script>
 
   <script src="/js/script.js" defer></script>
