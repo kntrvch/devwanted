@@ -81,20 +81,6 @@ function initAutocomplete() {
     addressInput.value = place.formatted_address;
   }
 
-  $(function() {
-    $('.summernote').summernote({
-        placeholder: 'Job description...',
-        tabsize: 2,
-        height: 200,
-        toolbar: [
-          ['style', ['bold', 'italic', 'underline']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['codeview'],
-          ['fullscreen']
-        ]
-      });
-  });
-
   </script>
 
   <script src="/js/script.js" defer></script>

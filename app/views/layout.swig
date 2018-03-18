@@ -22,13 +22,7 @@
   {% if ENV_DEVELOPMENT %}
     <script src="http://localhost:35729/livereload.js"></script>
   {% endif %}
-  <script>
-  $(function(){
-    $(".nano").slimScroll({
-        height: '600px'
-    });
-  });
-</script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
