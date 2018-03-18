@@ -76,6 +76,8 @@ router.get('/jobs', function (req, res, next) {
 
 router.post('/nearme', function (req, res, next) {
 
+    console.log(req.body);
+
     // Setup limit
     var limit = req.body.limit || 10;
 
@@ -90,19 +92,18 @@ router.post('/nearme', function (req, res, next) {
 
     // find a location
     Job.find({
-        'coordinates': {
-            $near: {
-                $geometry: {
-                    type: "Point",
-                    coordinates: coords
+        "coordinates": {
+            "$near": {
+                "$geometry": {
+                    "type": "Point",
+                    "coordinates": coords
                 },
-                // distance to radians
-                $maxDistance: maxDistance * 1609.34, spherical: true
+                "$maxDistance": maxDistance * 1609.34, spherical: true
             }
         }
     }).limit(limit).exec(function (err, jobs) {
         if (err) {
-            //return res.status(500).json(err);
+            return res.status(500).json(err);
         }
 
         //res.status(200).json(stores);
