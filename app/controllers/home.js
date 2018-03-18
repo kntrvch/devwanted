@@ -82,13 +82,13 @@ router.post('/nearme', function (req, res, next) {
     var limit = req.body.limit || 10;
 
     // Default max distance to 10 kilometers
-    var maxDistance = req.body.distance || 10;
+    var maxDistance = parseFloat(req.body.distance) || 10;
 
     // Setup coords Object = [ <longitude> , <latitude> ]
     var coords = [];
     // Create the array
-    coords[0] = req.body.longitude;
-    coords[1] = req.body.latitude;
+    coords[0] = parseFloat(req.body.longitude);
+    coords[1] = parseFloat(req.body.latitude);
 
     // find a location
     Job.find({
@@ -98,7 +98,8 @@ router.post('/nearme', function (req, res, next) {
                     "type": "Point",
                     "coordinates": coords
                 },
-                "$maxDistance": maxDistance * 1609.34, spherical: true
+                "$maxDistance": maxDistance * 1609.34, 
+                "spherical": true
             }
         }
     }).limit(limit).exec(function (err, jobs) {
