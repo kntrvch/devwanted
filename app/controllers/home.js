@@ -102,7 +102,7 @@ router.post('/nearme', function (req, res, next) {
         }
     }).limit(limit).exec(function (err, jobs) {
         if (err) {
-            return res.status(500).json(err);
+            //return res.status(500).json(err);
         }
 
         //res.status(200).json(stores);
