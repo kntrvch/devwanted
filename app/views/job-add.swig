@@ -94,7 +94,20 @@ function initAutocomplete() {
         ]
       });
 
-      
+      $("#logoButton").click(function() {
+        self = this;
+        cloudinary.openUploadWidget({ 
+          cloud_name: 'dmhmw9a8k', 
+          upload_preset: 'zf8tl0pf'
+          }, function(error, result) {
+            var thumbnailUrl = result[0].thumbnail_url || '';
+            var imageUrl = result[0].secure_url || '';
+            $(self).text("Change");
+            $("#thumbnailUrl").val(thumbnailUrl);
+            $("#imageUrl").val(imageUrl);
+            $("#logoWrapper").html("<img src='" + thumbnailUrl + "' alt=''>");;
+          });
+      });
   });
 
   </script>
