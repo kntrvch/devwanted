@@ -1,6 +1,5 @@
 {% extends 'layout.swig' %} 
 {% block content %}
-  <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
   <div class="container">
     <div class="row">
       <div class="col-md-6"> 
