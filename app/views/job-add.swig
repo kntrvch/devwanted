@@ -61,6 +61,8 @@
       </div>
     </div>
   </div>
+  <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
+
   <script>
     var latitudeInput = document.getElementById('latitude');
     var longitudeInput = document.getElementById('longitude');
