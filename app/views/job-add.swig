@@ -1,5 +1,6 @@
 {% extends 'layout.swig' %} 
 {% block content %}
+  <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
   <div class="container">
     <div class="row">
       <div class="col-md-6"> 
@@ -96,6 +97,6 @@ function initAutocomplete() {
   });
 
   </script>
-  <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
-  <script src="/js/script.js"></script>
+
+  <script src="/js/script.js" defer></script>
 {% endblock %}

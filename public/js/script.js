@@ -1,5 +1,5 @@
 $(function() {
-  $("#logoButton").on('click', function() {
+  $("#logoButton").click(function() {
         console.log('cloudinary start');
         self = this;
         cloudinary.openUploadWidget({ 
