@@ -28,7 +28,7 @@
   });
 </script>
 <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
-<script>
+<script type="text/javascript">
 $(function() {
   $("#logoButton").on('click', function() {
         console.log('cloudinary start');
