@@ -30,7 +30,8 @@
 <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
 <script>
 $(function() {
-  $("#logoButton").click(function() {
+  $("#logoButton").on('click', function() {
+        console.log('cloudinary start');
         self = this;
         cloudinary.openUploadWidget({ 
           cloud_name: 'dmhmw9a8k', 
