@@ -27,7 +27,7 @@ var config = {
       name: 'jobboard'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/jobboard-production'
+    db: 'mongodb://user1:password1@ds115749.mlab.com:15749/jobboard'
   }
 };
 

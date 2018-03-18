@@ -2,6 +2,10 @@
   "name": "jobboard",
   "version": "0.0.1",
   "private": true,
+  "main": "app.js",
+	"engines": {
+		"node": "9.8.0"
+	},
   "scripts": {
     "start": "node app.js"
   },
