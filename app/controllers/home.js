@@ -92,15 +92,15 @@ router.post('/nearme', function (req, res, next) {
 
     // find a location
     Job.find({
+
         "coordinates": {
-            "$near": {
-                "$geometry": {
-                    "type": "Point",
-                    "coordinates": coords
-                },
-                "$maxDistance": maxDistance * 1609.34
-            },
-            "spherical": true
+
+            "$geoNear": {
+                "near": { "type": "Point", "coordinates": coords },
+                "maxDistance": maxDistance * 1609.34,
+                "spherical": true
+             }
+
         }
     }).limit(limit).exec(function (err, jobs) {
         if (err) {
