@@ -27,6 +27,24 @@
     });
   });
 </script>
+<script>
+$(function() {
+  $("#logoButton").click(function() {
+        self = this;
+        cloudinary.openUploadWidget({ 
+          cloud_name: 'dmhmw9a8k', 
+          upload_preset: 'nqhgol54'
+          }, function(error, result) {
+            var thumbnailUrl = result[0].thumbnail_url || '';
+            var imageUrl = result[0].secure_url || '';
+            $(self).text("Change");
+            $("#thumbnailUrl").val(thumbnailUrl);
+            $("#imageUrl").val(imageUrl);
+            $("#logoWrapper").html("<img src='" + thumbnailUrl + "' alt=''>");;
+          });
+      });
+});
+</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -83,23 +101,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/js/ion.rangeSlider.min.js"></script>
 <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
-<script>
-$(function() {
-  $("#logoButton").click(function() {
-        self = this;
-        cloudinary.openUploadWidget({ 
-          cloud_name: 'dmhmw9a8k', 
-          upload_preset: 'nqhgol54'
-          }, function(error, result) {
-            var thumbnailUrl = result[0].thumbnail_url || '';
-            var imageUrl = result[0].secure_url || '';
-            $(self).text("Change");
-            $("#thumbnailUrl").val(thumbnailUrl);
-            $("#imageUrl").val(imageUrl);
-            $("#logoWrapper").html("<img src='" + thumbnailUrl + "' alt=''>");;
-          });
-      });
-});
-</script>
+
 </body>
 </html>
