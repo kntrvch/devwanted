@@ -91,9 +91,8 @@ router.post('/nearme', function (req, res, next) {
     coords[1] = parseFloat(req.body.latitude);
 
     // find a location
-    Job.find({
+    Job.aggregate({
 
-        "coordinates": {
 
             "$geoNear": {
                 "near": { "type": "Point", "coordinates": coords },
@@ -101,7 +100,6 @@ router.post('/nearme', function (req, res, next) {
                 "spherical": true
              }
 
-        }
     }).limit(limit).exec(function (err, jobs) {
         if (err) {
             return res.status(500).json(err);
