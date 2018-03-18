@@ -1,6 +1,5 @@
 {% extends 'layout.swig' %} 
 {% block content %}
-<script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"/>
   <div class="container">
     <div class="row">
       <div class="col-md-6"> 
@@ -62,7 +61,6 @@
       </div>
     </div>
   </div>
-  
   <script>
     var latitudeInput = document.getElementById('latitude');
     var longitudeInput = document.getElementById('longitude');
