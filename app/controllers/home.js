@@ -98,9 +98,9 @@ router.post('/nearme', function (req, res, next) {
                     "type": "Point",
                     "coordinates": coords
                 },
-                "$maxDistance": maxDistance * 1609.34, 
-                "spherical": true
-            }
+                "$maxDistance": maxDistance * 1609.34
+            },
+            "spherical": true
         }
     }).limit(limit).exec(function (err, jobs) {
         if (err) {
