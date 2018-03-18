@@ -1,7 +1,5 @@
 {% extends 'layout.swig' %} 
 {% block content %}
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
   <div class="container">
     <div class="row">
       <div class="col-md-6"> 
