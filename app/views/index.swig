@@ -142,7 +142,7 @@ function initAutocomplete() {
         });
         google.maps.event.addListener(marker, 'click', function () {
             $(".job-details-label").hide();
-            $(".nano").nanoScroller({ scrollTo: $('[data-marker-index={{ loop.index }}]') });
+            $(".nano").slimScroll({ scrollTo: $('[data-marker-index={{ loop.index }}]') });
             $('.pan-to-marker').removeClass("active");
             $('[data-marker-index={{ loop.index }}]').addClass("active");
 
